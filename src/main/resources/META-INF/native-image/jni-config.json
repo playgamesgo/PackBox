@@ -1,0 +1,11 @@
+[
+{
+  "name":"java.lang.ProcessBuilder$RedirectPipeImpl",
+  "fields":[{"name":"fd"}],
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.jline.nativ.CLibrary",
+  "fields":[{"name":"TCSADRAIN"}, {"name":"TCSAFLUSH"}, {"name":"TCSANOW"}, {"name":"TIOCGWINSZ"}, {"name":"TIOCSWINSZ"}]
+}
+]
