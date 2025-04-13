@@ -52,7 +52,7 @@ public final class NeoForgeLoader {
     public static PromptableElementIF getLoaderVersionPrompt(String minecraftVersion) {
         List<String> versions = getVersions();
         return new ListChoice(
-                "Select loader version:", "loaderVersion", 10, PageSizeType.ABSOLUTE,
+                "Select NeoForge version:", "loaderVersion", 10, PageSizeType.ABSOLUTE,
                 versions.stream().filter(s -> s.startsWith(minecraftVersion.substring(2, 6)))
                         .map(ListItem::new)
                         .map(item -> (ListItemIF) item).toList()

@@ -55,7 +55,7 @@ public final class QuiltLoader {
     public static PromptableElementIF getLoaderVersionPrompt() {
         List<FabricLoader.LoaderVersion> versions = getLoaderVersion();
         return new ListChoice(
-                "Select loader version:", "loaderVersion", 10, PageSizeType.ABSOLUTE,
+                "Select Quilt version:", "loaderVersion", 10, PageSizeType.ABSOLUTE,
                 versions.stream()
                         .map(version -> new ListItem(version.getVersion()))
                         .map(item -> (ListItemIF) item).toList()

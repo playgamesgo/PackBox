@@ -1,5 +1,3 @@
-import org.graalvm.buildtools.gradle.dsl.NativeImageOptions
-
 plugins {
     id "java"
     id "org.graalvm.buildtools.native" version "0.9.27"
@@ -16,6 +14,10 @@ repositories {
 dependencies {
     implementation "org.eclipse.jgit:org.eclipse.jgit:7.2.0.202503040940-r"
     annotationProcessor "info.picocli:picocli-codegen:4.7.6"
+
+    implementation "org.slf4j:slf4j-api:1.7.32"
+    implementation "ch.qos.logback:logback-classic:1.4.12"
+    implementation "ch.qos.logback:logback-core:1.4.12"
 
     implementation "info.picocli:picocli:4.7.6"
     implementation "com.google.code.gson:gson:2.12.1"
@@ -44,7 +46,7 @@ jar {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21) // Use the Java version you're targeting
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
