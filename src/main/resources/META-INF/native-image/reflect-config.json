@@ -8,18 +8,6 @@
   "queryAllDeclaredMethods":true
 },
 {
-  "name":"java.lang.ProcessBuilder$RedirectPipeImpl",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"java.lang.ProcessHandle",
-  "methods":[{"name":"current","parameterTypes":[] }, {"name":"info","parameterTypes":[] }, {"name":"parent","parameterTypes":[] }]
-},
-{
-  "name":"java.lang.ProcessHandle$Info",
-  "methods":[{"name":"command","parameterTypes":[] }]
-},
-{
   "name":"java.lang.System",
   "methods":[{"name":"console","parameterTypes":[] }]
 },
@@ -105,34 +93,24 @@
   "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
 },
 {
-  "name":"java.util.concurrent.ForkJoinTask",
-  "fields":[{"name":"aux"}, {"name":"status"}]
-},
-{
-  "name":"java.util.concurrent.atomic.AtomicReference",
-  "fields":[{"name":"value"}]
-},
-{
-  "name":"jdk.internal.misc.Unsafe"
-},
-{
   "name":"me.playgamesgo.packbox.Main",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"me.playgamesgo.packbox.commands.DetectCommand",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true
 },
 {
   "name":"me.playgamesgo.packbox.commands.InitCommand",
   "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
+  "queryAllDeclaredMethods":true
 },
 {
-  "name":"org.jline.terminal.impl.exec.ExecTerminalProvider",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"org.jline.terminal.impl.jni.JniTerminalProvider",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
+  "name":"me.playgamesgo.packbox.commands.InstallCommand",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true
 },
 {
   "name":"picocli.CommandLine$AutoHelpMixin",

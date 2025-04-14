@@ -58,7 +58,7 @@ tasks.register('generateGraalConfig', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 
     jvmArgs = [
-        '-agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image'
+            '-agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image'
     ]
 
     doFirst {
@@ -77,7 +77,19 @@ graalvmNative {
             imageName = 'packbox'
             mainClass = 'me.playgamesgo.packbox.Main'
             buildArgs.add('--no-fallback')
+            buildArgs.add("-H:+UnlockExperimentalVMOptions")
             configurationFileDirectories.from(file('src/main/resources/META-INF/native-image'))
+
+            buildArgs.add("-H:IncludeResources=org/jline/consoleui/consoleui_messages.*\\.properties")
+            buildArgs.add("-H:IncludeResourceBundles=org.jline.consoleui.consoleui_messages")
+            buildArgs.add("-H:IncludeResources=.*/jline/.*\\.properties")
+            buildArgs.add("-H:IncludeResources=.*consoleui.*\\.properties")
+            buildArgs.add("-H:IncludeResourceBundles=org.jline.consoleui.consoleui_messages")
+            buildArgs.add("-H:IncludeResourceBundles=consoleui_messages")
+
+            buildArgs.add('--enable-http')
+            buildArgs.add('--enable-https')
+            buildArgs.add('--enable-url-protocols=http,https')
         }
     }
 }
