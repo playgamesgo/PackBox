@@ -61,6 +61,7 @@ public final class Manifest extends TypeAdapter<Manifest> {
             out.name("path").value(mod.getPath());
             out.name("url").value(mod.getUrl());
             out.name("source").value(mod.getSource().name());
+            out.name("sha1").value(mod.getSha1());
             out.endObject();
         }
         out.endArray();
@@ -95,6 +96,7 @@ public final class Manifest extends TypeAdapter<Manifest> {
                                 case "path" -> mod.setPath(in.nextString());
                                 case "url" -> mod.setUrl(in.nextString());
                                 case "source" -> mod.setSource(Source.valueOf(in.nextString().toUpperCase()));
+                                case "sha1" -> mod.setSha1(in.nextString());
                                 default -> in.skipValue();
                             }
                         }
@@ -119,5 +121,6 @@ public final class Manifest extends TypeAdapter<Manifest> {
         private String path;
         private String url;
         private Manifest.Source source;
+        private String sha1;
     }
 }

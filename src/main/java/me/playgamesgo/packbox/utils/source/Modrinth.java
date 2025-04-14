@@ -46,10 +46,11 @@ public final class Modrinth {
         mod.setPath(file.getPath());
         mod.setUrl(modrinthResponse.getFiles().getFirst().getUrl());
         mod.setSource(Manifest.Source.MODRINTH);
+        mod.setSha1(sha1);
         return mod;
     }
 
-    private static @Nullable String createSha1(File file) {
+    public static @Nullable String createSha1(File file) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
             FileInputStream fis = new FileInputStream(file);

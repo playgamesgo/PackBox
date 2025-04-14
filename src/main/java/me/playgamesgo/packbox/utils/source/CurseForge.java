@@ -22,10 +22,11 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 public final class CurseForge {
-    public static @Nullable Manifest.Mod getMod(File file) {
+    public static @Nullable Manifest.Mod getMod(File file, String token) {
         byte[] fileBytes;
         try {
             fileBytes = Files.readAllBytes(file.toPath());
@@ -44,7 +45,7 @@ public final class CurseForge {
                 .uri(URI.create("https://api.curseforge.com/v1/fingerprints"))
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
-                .header("x-api-key", "$2a$10$bL4bIL5pUWqfcO7KQtnMReakwtfHbNKh6v1uTpKlzhwoueEJQnPnm")
+                .header("x-api-key", token)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
         HttpResponse<String> response;
@@ -63,6 +64,7 @@ public final class CurseForge {
         mod.setPath(file.getPath());
         mod.setUrl(curseForgeResponse.getData().getExactMatches().getFirst().getFile().getDownloadUrl());
         mod.setSource(Manifest.Source.CURSEFORGE);
+        mod.setSha1(Optional.ofNullable(Modrinth.createSha1(file)).orElseThrow());
         return mod;
     }
 

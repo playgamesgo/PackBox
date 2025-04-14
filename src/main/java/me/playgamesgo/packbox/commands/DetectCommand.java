@@ -5,6 +5,8 @@ import me.playgamesgo.packbox.utils.Manifest;
 import me.playgamesgo.packbox.utils.source.CurseForge;
 import me.playgamesgo.packbox.utils.source.Modrinth;
 import org.jetbrains.annotations.Nullable;
+import org.jline.consoleui.elements.ConfirmChoice;
+import org.jline.consoleui.prompt.ConfirmResult;
 import org.jline.consoleui.prompt.ConsolePrompt;
 import org.jline.consoleui.prompt.PromptResultItemIF;
 import org.jline.consoleui.prompt.builder.PromptBuilder;
@@ -27,7 +29,7 @@ import java.util.concurrent.Callable;
 @Slf4j
 @CommandLine.Command(
         name = "detect",
-        description = "Detect mods source from files"
+        description = "Detect files sources from files"
 )
 public final class DetectCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-f", "--folders"},
@@ -53,7 +55,28 @@ public final class DetectCommand implements Callable<Integer> {
             ConsolePrompt prompt = new ConsolePrompt(terminal);
             PromptBuilder promptBuilder = prompt.getPromptBuilder();
 
+            Path curseForgeTokenFile = Paths.get(".curseforge");
+            if (!Files.exists(curseForgeTokenFile) &&
+                    (manifest.getSource().equals(Manifest.Source.CURSEFORGE) || manifest.getFallbackSource().equals(Manifest.Source.CURSEFORGE))) {
+                promptBuilder.createConfirmPromp().
+                        name("token")
+                        .message("CurseForge token not found, You can fetch official launcher's token, but using " +
+                                "official CurseForge Launcher's token may break CurseForge's Terms of Service.\n" +
+                                "You can specify your own token in the .curseforge file. " +
+                                "Do you want to fetch official launcher's token?")
+                        .addPrompt();
+
+                Map<String, PromptResultItemIF> result = prompt.prompt(promptBuilder.build());
+                if (((ConfirmResult) result.get("token")).getConfirmed().equals(ConfirmChoice.ConfirmationValue.YES)) {
+                    Files.writeString(curseForgeTokenFile, "$2a$10$bL4bIL5pUWqfcO7KQtnMReakwtfHbNKh6v1uTpKlzhwoueEJQnPnm");
+                    AttributedStringBuilder successMessage = new AttributedStringBuilder()
+                            .append("Token fetched successfully", AttributedStyle.BOLD.foreground(AttributedStyle.GREEN));
+                    System.out.println(successMessage.toAnsi(terminal));
+                } else Files.createFile(curseForgeTokenFile);
+            }
+
             if (folders == null) {
+                promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createCheckboxPrompt()
                         .name("folders")
                         .message("Select a folder to detect sources")
@@ -117,7 +140,7 @@ public final class DetectCommand implements Callable<Integer> {
 
                         @Nullable Manifest.Mod mod = switch (manifest.getSource()) {
                             case MODRINTH -> Modrinth.getMod(file);
-                            case CURSEFORGE -> CurseForge.getMod(file);
+                            case CURSEFORGE -> CurseForge.getMod(file, Files.readString(curseForgeTokenFile));
                             default -> throw new IllegalStateException("Unexpected value: " + manifest.getSource());
                         };
 
@@ -136,7 +159,7 @@ public final class DetectCommand implements Callable<Integer> {
 
                                 mod = switch (manifest.getFallbackSource()) {
                                     case MODRINTH -> Modrinth.getMod(file);
-                                    case CURSEFORGE -> CurseForge.getMod(file);
+                                    case CURSEFORGE -> CurseForge.getMod(file, Files.readString(curseForgeTokenFile));
                                     default -> throw new IllegalStateException("Unexpected value: " + manifest.getFallbackSource());
                                 };
 
