@@ -47,7 +47,7 @@ public final class InitCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-m", "--minecraft"}, description = "Minecraft version")
     @Nullable private String minecraftVersion;
 
-    @CommandLine.Option(names = {"--loader-version"}, description = "Loader version")
+    @CommandLine.Option(names = {"-lv", "--loader-version"}, description = "Loader version")
     @Nullable private String loaderVersion;
 
     @CommandLine.Option(names = {"-s", "--source"}, description = "Primary mod source (Modrinth, Curseforge)")

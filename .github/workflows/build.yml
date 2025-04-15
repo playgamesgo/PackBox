@@ -24,7 +24,6 @@ jobs:
         java-version: '21'
         distribution: 'graalvm-community'
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        components: 'native-image'
 
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v2

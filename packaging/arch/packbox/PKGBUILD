@@ -1,0 +1,26 @@
+# Maintainer: playgamesgo <pplaygamesgo@gmail.com>
+
+pkgname=packbox
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="A CLI tool for development Minecraft modpacks and managing them with git."
+arch=('x86_64')
+url="https://github.com/playgamesgo/PackBox"
+license=('GPL-3.0-or-later')
+conflicts=("${pkgname}-git")
+source_x86_64=("${url}/releases/download/v${pkgver}/${pkgname}"
+               "${url}/raw/v${pkgver}/README.md"
+               "${url}/raw/v${pkgver}/LICENSE")
+sha256sums_x86_64=('SKIP' 'SKIP' 'SKIP')
+
+package() {
+  install -Dm755 "${srcdir}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+
+  if [ -f "${srcdir}/README.md" ]; then
+    install -Dm644 "${srcdir}/README.md" "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+  fi
+
+  if [ -f "${srcdir}/LICENSE" ]; then
+    install -Dm644 "${srcdir}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  fi
+}

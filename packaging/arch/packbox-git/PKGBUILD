@@ -1,0 +1,34 @@
+# Maintainer: playgamesgo <pplaygamesgo@gmail.com>
+
+pkgname=packbox-git
+_pkgname=packbox
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="A CLI tool for development Minecraft modpacks and managing them with git."
+arch=('x86_64')
+url="https://github.com/playgamesgo/PackBox"
+license=('GPL-3.0-or-later')
+depends=('java-runtime>=21')
+makedepends=('git' 'jdk21-graalvm-bin')
+provides=("${_pkgname}")
+conflicts=("${_pkgname}")
+source=("git+${url}.git")
+sha256sums=('SKIP')
+
+build() {
+  cd "${srcdir}/${_pkgname}"
+  ./gradlew clean shadowJar nativeCompile
+}
+
+package() {
+  cd "${srcdir}/${_pkgname}"
+  install -Dm755 "build/native/nativeCompile/${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
+
+  if [ -f "README.md" ]; then
+    install -Dm644 "README.md" "${pkgdir}/usr/share/doc/${_pkgname}/README.md"
+  fi
+
+  if [ -f "LICENSE" ]; then
+    install -Dm644 "LICENSE" "${pkgdir}/usr/share/licenses/${_pkgname}/LICENSE"
+  fi
+}
