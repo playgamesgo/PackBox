@@ -8,13 +8,13 @@ arch=('x86_64')
 url="https://github.com/playgamesgo/PackBox"
 license=('GPL-3.0-or-later')
 conflicts=("${pkgname}-git")
-source_x86_64=("${url}/releases/download/v${pkgver}/${pkgname}"
-               "${url}/raw/v${pkgver}/README.md"
-               "${url}/raw/v${pkgver}/LICENSE")
+source_x86_64=("${url}/releases/download/${pkgver}/${pkgname}-${pkgver}-linux"
+               "https://raw.githubusercontent.com/playgamesgo/PackBox/master/README.md"
+               "https://raw.githubusercontent.com/playgamesgo/PackBox/master/LICENSE")
 sha256sums_x86_64=('SKIP' 'SKIP' 'SKIP')
 
 package() {
-  install -Dm755 "${srcdir}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+  install -Dm755 "${srcdir}/${pkgname}-${pkgver}-linux" "${pkgdir}/usr/bin/${pkgname}"
 
   if [ -f "${srcdir}/README.md" ]; then
     install -Dm644 "${srcdir}/README.md" "${pkgdir}/usr/share/doc/${pkgname}/README.md"

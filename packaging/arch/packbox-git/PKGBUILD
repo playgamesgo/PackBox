@@ -2,6 +2,7 @@
 
 pkgname=packbox-git
 _pkgname=packbox
+_reponame=PackBox
 pkgver=1.0.0
 pkgrel=1
 pkgdesc="A CLI tool for development Minecraft modpacks and managing them with git."
@@ -16,12 +17,12 @@ source=("git+${url}.git")
 sha256sums=('SKIP')
 
 build() {
-  cd "${srcdir}/${_pkgname}"
+  cd "${srcdir}/${_reponame}"
   ./gradlew clean shadowJar nativeCompile
 }
 
 package() {
-  cd "${srcdir}/${_pkgname}"
+  cd "${srcdir}/${_reponame}"
   install -Dm755 "build/native/nativeCompile/${_pkgname}" "${pkgdir}/usr/bin/${_pkgname}"
 
   if [ -f "README.md" ]; then
